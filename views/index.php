@@ -31,9 +31,30 @@
             }
         ?>
         </div>
-        <div class="section">
-            sddsfdddd ddddddddddd ddddddddddddd dddddddddddddddddd cccccccccccccc  vvvvvvvvvvvvvv vvvvvvvvvvvvv vvvvvvvvvvvvvvvvv vvvvvvvvvvv vvvvvvvvvv bbbbbbbbbb bbbbbbbbbbbbbbb
-        </div>
+        <?php
+            if ($files) {
+                echo '<div class="section">';
+
+                foreach ($files as $file) {
+                ?>
+                    <div class="result">
+                        <div class="result_header"><?= $file->name ?></div>
+                    <?php
+                        if ($file->result) {
+                            foreach ($file->result as $result) {
+                                echo '<div class="result_row">'.$result.'</div>';
+                            }
+                        } else {
+                            echo '<div class="empty">No result</div>';
+                        }
+                    ?>
+                    </div>
+                <?php
+                }
+
+                echo '</div>';
+            }
+        ?>
     </div>
 </body>
 </html>

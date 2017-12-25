@@ -17,6 +17,7 @@ class Application
     {
         $this->_clean();
         $this->_loadFiles();
+        $this->_googleSearch();
     }
 
     private function _clean()
@@ -56,6 +57,18 @@ class Application
                 }
             }
         }
+    }
+
+    private function _googleSearch()
+    {
+        foreach ($this->_files as $file) {
+            $file->result = $this->_googleRequest($file);
+        }
+    }
+
+    private function _googleRequest($file)
+    {
+        return [];
     }
 
     private function _view()
