@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +11,8 @@
     <div class="wrapper">
         <div class="section">
             <form method="post" class="form" enctype="multipart/form-data">
-                <input type="file" name="images[]" class="field" multiple="multiple" accept="image/*">
+                <input type="file" name="images[]" class="fileField" multiple="multiple" accept="image/*">
+                <input type="text" name="numPages" class="textField" placeholder="Number pages">
                 <button type="submit" class="btn">Search</button>
             </form>
         </div>
@@ -38,7 +39,7 @@
                 foreach ($files as $file) {
                 ?>
                     <div class="result">
-                        <div class="result_header"><?= $file->name ?></div>
+                        <div class="result_header"><?= $file->name ?> <span>[<?= $pages ?> pages]</span></div>
                     <?php
                         if ($file->result) {
                             foreach ($file->result as $result) {

@@ -5,8 +5,12 @@ require __DIR__.'/GoogleImageSearch.php';
 class Application
 {
     private $_files = [];
+    private $_pages = 2;
 
     function __construct() {
+        if (!empty($_POST['numPages'])) {
+            $this->_pages = (int) $_POST['numPages'];
+        }
     }
 
     public function run()
@@ -70,34 +74,29 @@ class Application
 
     private function _googleRequest($file)
     {
+        $resultLinks = [];
+        $url = 'http://'.$_SERVER['SERVER_NAME'].'/img/'.$file->name;
+
         $imageSearch = new GoogleImageSearch();
+        $results = $imageSearch->search($url, $this->_pages);
 
-        echo "Search by image URL: <br />\n";
-        if($results = $imageSearch->search('http://upload.wikimedia.org/wikipedia/commons/2/22/Turkish_Van_Cat.jpg', 2)) {
-            if($results['search_results']) {
-                echo "Best guess: <strong><a href=\"{$results['best_guess'][1]}\">{$results['best_guess'][0]}</strong><br />\n";
-                echo "<ol><br />\n";
-                foreach($results['search_results'] as $k => $r) {
-                    echo "<li><a href=\"{$r[1]}\">{$r[0]}</a> ; <a href=\"{$r[2]}\">Original image</a></li>\n";
-                }
-                echo "</ol><br />\n";
-            } else {
-                echo 'Nothing found';
+        if($results && $results['search_results']) {
+            foreach($results['search_results'] as $k => $r) {
+                $resultLinks[] = '
+                    <a target="_blank" href="'.$r[1].'">'.$r[0].'</a>
+                    <span>[ <a target="_blank" href="'.$r[2].'">Original image</a> ]</span>
+                ';
             }
-
         }
-        echo "Search by uploading local image: <br />\n";
 
-        exit();
-
-
-        return [];
+        return $resultLinks;
     }
 
     private function _view()
     {
         $this->render(__DIR__.'/../views/index.php', [
             'files' => $this->_files,
+            'pages' => $this->_pages,
         ]);
     }
 
