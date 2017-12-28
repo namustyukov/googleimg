@@ -126,9 +126,28 @@ body {
 .result_header {
     font-size: 20px;
     padding-bottom: 15px;
+    overflow: hidden;
 }
 
-.result_header span {
+.result_header_right {
+    float: right;
+    font-size: 12px;
+}
+
+.result_header_left {
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+.result_header_left img {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 15px;
+    max-width: 60px;
+    max-height: 60px;
+}
+
+.result_header_left span {
     color: #aaa;
     display: inline-block;
     margin-left: 20px;
